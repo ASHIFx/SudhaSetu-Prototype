@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, ArrowRight, Stethoscope, HeartPulse, Pill, MessageSquare } from 'lucide-react';
+import { Leaf, ArrowRight, Stethoscope, HeartPulse, Pill, MessageSquare, ShieldCheck, Activity, Search } from 'lucide-react';
 
 export default function HomeScreen({ setView }) {
   const features = [
@@ -29,6 +29,12 @@ export default function HomeScreen({ setView }) {
     },
   ];
 
+  const snapshotItems = [
+    { value: '24/7', label: 'Self-serve guidance', icon: <Activity size={17} /> },
+    { value: '12+', label: 'Ayurvedic topics', icon: <Search size={17} /> },
+    { value: '100%', label: 'Prototype data', icon: <ShieldCheck size={17} /> },
+  ];
+
   return (
     <div className="home-screen">
       <section className="home-hero">
@@ -53,15 +59,37 @@ export default function HomeScreen({ setView }) {
         </div>
       </section>
 
+      <section className="care-snapshot" aria-label="Sudha Setu care snapshot">
+        <div className="snapshot-intro">
+          <span className="snapshot-kicker">Care snapshot</span>
+          <h2>A calmer way to find your next step.</h2>
+          <p>Start with a symptom, a trusted facility, or a medicine you want to understand.</p>
+        </div>
+        <div className="snapshot-items">
+          {snapshotItems.map((item) => (
+            <div className="snapshot-item" key={item.label}>
+              <span className="snapshot-icon">{item.icon}</span>
+              <strong>{item.value}</strong>
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="features-grid">
         {features.map((f) => (
-          <div key={f.id} className="feature-card" onClick={() => setView(f.id)}>
+          <button key={f.id} className="feature-card" onClick={() => setView(f.id)}>
             <div className="feature-icon-wrap">{f.icon}</div>
             <h3 className="feature-title">{f.title}</h3>
             <p className="feature-text">{f.desc}</p>
-          </div>
+            <span className="feature-link">Open guide <ArrowRight size={14} /></span>
+          </button>
         ))}
       </section>
+
+      <p className="prototype-note">
+        <ShieldCheck size={15} /> Prototype guidance is educational and does not replace a qualified clinician.
+      </p>
     </div>
   );
 }
